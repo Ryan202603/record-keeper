@@ -5,7 +5,6 @@
     v-bind="$attrs"
     :data="tableData"
     @selection-change="handleSelectionChange"
-    v-loading="loading"
     height="calc(100vh - 222px)"
     style="width: 100%"
   >
@@ -92,8 +91,6 @@ interface TableProps {
   columns: TableColumn[]
   // 选中列
   selectedRows?: any[]
-  // 是否显示加载状态
-  loading?: boolean
   // 是否显示选择列
   showSelection?: boolean
   // 操作按钮配置
@@ -116,7 +113,6 @@ withDefaults(defineProps<TableProps>(), {
   tableData: () => [],
   columns: () => [],
   selectedRows: () => [],
-  loading: false,
   showSelection: true,
   tableButtons: () => [],
   showPagination: true,
