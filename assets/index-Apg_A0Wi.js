@@ -1,0 +1,1 @@
+import{H as c,L as s,f as o,a as e,w as t,I as _,T as i,c as l,h as d}from"./index-D0tkYasX.js";const f={};function m(u,p){const a=s("router-view");return e(),o(a,null,{default:t(({Component:n,route:r})=>[_(i,{name:"fade",mode:"out-in"},{default:t(()=>[(e(),l("div",{key:r.path},[(e(),o(d(n)))]))]),_:2},1024)]),_:1})}const x=c(f,[["render",m]]);export{x as default};
