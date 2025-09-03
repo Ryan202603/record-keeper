@@ -28,11 +28,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Generate types
-        run: npx vue-tsc --noEmit && npx vite build --mode development --outDir temp # 生成类型文件并临时构建
-
       - name: Build
-        run: pnpm run build
+        run: pnpm run build # 直接构建，已包含类型生成
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
