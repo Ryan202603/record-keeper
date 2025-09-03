@@ -21,7 +21,7 @@ import Edit from './edit.vue'
 import { columns, searchFormItems } from './index.ts'
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { useTableData } from '@/hooks'
-import { getUserList, delUser, getUser, resetUserPwd } from '@/api'
+import { getUserList, delUser } from '@/api'
 
 type UserRow = {
   userId: string | number
@@ -41,9 +41,7 @@ const operationButtons: OperationButton[] = [
     icon: Plus,
     onClick: () => {
       Object.keys(form).map(key => (form[key] = ''))
-      form.password = '123456' // 默认密码
-      form.status = '0' // 默认启用状态
-      form.sex = '1' // 默认启用状态
+      form.sex = '1'
       type.value = 'add'
       dialog.value = true
     }
@@ -80,13 +78,9 @@ const tableButtons: TableButton[] = [
     label: '编辑',
     type: 'primary',
     onClick: row => {
-      getUser(row.userId).then(res => {
-        Object.assign(form, res.data)
-        form.postIds = res.postIds
-
-        type.value = 'edit'
-        dialog.value = true
-      })
+      Object.assign(form, row)
+      type.value = 'edit'
+      dialog.value = true
     }
   },
   {
@@ -99,24 +93,11 @@ const tableButtons: TableButton[] = [
         type: 'warning'
       })
         .then(() => {
-          return delUser(row.userId)
+          return delUser(row.id)
         })
         .then(() => {
           ElMessage.success('删除成功')
           refreshTableData() // 重新获取列表数据
-        })
-    }
-  },
-  {
-    label: '重置密码',
-    type: 'default',
-    onClick: row => {
-      resetUserPwd({ userId: row.userId, password: 123456 })
-        .then(() => {
-          ElMessage.success('密码重置成功')
-        })
-        .catch(() => {
-          ElMessage.error('密码重置失败')
         })
     }
   }

@@ -1,39 +1,24 @@
 export const columns: TableColumn[] = [
   {
-    prop: 'userName',
-    label: '用户名称',
-    minWidth: 180
-  },
-  {
     prop: 'nickName',
     label: '用户昵称',
     minWidth: 180
   },
   {
-    prop: 'deptName',
-    label: '部门',
-    minWidth: 180
-  },
-  {
-    prop: 'rolesName',
-    label: '角色',
-    minWidth: 180
-  },
-  {
-    prop: 'phonenumber',
+    prop: 'phone',
     label: '手机号码',
     minWidth: 180
   },
   {
-    prop: 'status',
-    label: '状态',
-    type: 'switch',
-    minWidth: 120
+    prop: 'email',
+    label: '邮箱',
+    minWidth: 180
   },
   {
-    prop: 'createTime',
-    label: '创建时间',
-    minWidth: 180
+    prop: 'sex',
+    label: '性别',
+    minWidth: 120,
+    formatter: (value: string) => (value === '1' ? '男' : '女')
   }
 ]
 

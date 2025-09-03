@@ -1,32 +1,11 @@
 {
   "users": [
     {
-      "userId": 3,
-      "nickName": "管理员",
-      "userName": "admin",
-      "phonenumber": "13800138000",
-      "email": "admin@example.com",
+      "id": "fc86",
       "sex": "1",
-      "status": "0",
-      "remark": "我是管理员",
-      "ndid": 1,
-      "wiid": 101,
-      "postIds": [1],
-      "roleId": 1
-    },
-    {
-      "userId": 2,
-      "nickName": "管理员",
-      "userName": "admin",
-      "phonenumber": "13800138000",
-      "email": "admin@example.com",
-      "sex": "1",
-      "status": "0",
-      "remark": "我是管理员",
-      "ndid": 1,
-      "wiid": 101,
-      "postIds": [1],
-      "roleId": 1
+      "nickName": "张三2",
+      "phone": "13511111111",
+      "email": "123@qq.com"
     }
   ]
 }

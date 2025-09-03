@@ -10,14 +10,6 @@ export const getUserList = params => {
   })
 }
 
-// 查询用户详细
-export function getUser(userId) {
-  return request({
-    url: '/system/user/' + userId,
-    method: 'get'
-  })
-}
-
 // 新增用户
 export const addUser = data => {
   return request({
@@ -30,7 +22,7 @@ export const addUser = data => {
 // 修改用户
 export const updateUser = data => {
   return request({
-    url: '/system/user',
+    url: apiPrefix + '/' + data.id,
     method: 'put',
     data
   })
@@ -41,23 +33,5 @@ export const delUser = userId => {
   return request({
     url: apiPrefix + '/' + userId,
     method: 'delete'
-  })
-}
-
-// 用户密码重置
-export const resetUserPwd = data => {
-  return request({
-    url: '/system/user/resetPwd',
-    method: 'put',
-    data
-  })
-}
-
-// 用户状态修改
-export const changeUserStatus = data => {
-  return request({
-    url: '/system/user/changeStatus',
-    method: 'put',
-    data
   })
 }

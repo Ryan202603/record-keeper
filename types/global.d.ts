@@ -30,6 +30,7 @@ declare global {
     sortable?: boolean
     align?: 'left' | 'center' | 'right'
     type?: 'tag' | 'switch' | 'image'
+    formatter?: (any) => {}
   }
 }
 

@@ -41,7 +41,7 @@
           </template>
 
           <template v-else>
-            {{ scope.row[column.prop] }}
+            {{ column.formatter ? column.formatter(scope.row[column.prop]) : scope.row[column.prop] }}
           </template>
         </template>
       </el-table-column>
