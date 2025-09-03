@@ -29,7 +29,7 @@ jobs:
         run: pnpm install
 
       - name: Generate types
-        run: pnpm run build:types # 如果有脚本，否则用 npx vue-tsc --noEmit
+        run: npx vue-tsc --noEmit # 生成类型文件
 
       - name: Build
         run: pnpm run build
