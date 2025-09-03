@@ -24,7 +24,7 @@ import { useTableData } from '@/hooks'
 import { getUserList, delUser } from '@/api'
 
 type UserRow = {
-  userId: string | number
+  id: string | number
 }
 
 const { tableData, total, pageNum, pageSize, handleSearch, handleSizeChange, handleCurrentChange, refreshTableData } =
@@ -56,14 +56,14 @@ const operationButtons: OperationButton[] = [
         return
       }
 
-      const userIds = selectedRows.value.map(item => item.userId).join(',')
+      const id = selectedRows.value.map(item => item.id).join(',')
       ElMessageBox.confirm(`是否确认删除选中的${selectedRows.value.length}条数据?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(() => {
-          return delUser(userIds)
+          return delUser(id)
         })
         .then(() => {
           ElMessage.success('删除成功')

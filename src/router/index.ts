@@ -1,4 +1,5 @@
 import { createWebHashHistory, createRouter } from 'vue-router'
+import routers from './userRouters'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -8,28 +9,7 @@ const router = createRouter({
       path: '/',
       component: () => import('@/layout/index.vue'),
       redirect: '/system-management/user',
-      children: [
-        {
-          name: 'system-management',
-          path: 'system-management',
-          component: () => import('@/views/system-management/index.vue'),
-          meta: {
-            title: '系统管理',
-            id: 1
-          },
-          children: [
-            {
-              name: 'user',
-              path: 'user',
-              component: () => import('@/views/system-management/user/index.vue'),
-              meta: {
-                title: '用户管理',
-                id: 11
-              }
-            }
-          ]
-        }
-      ]
+      children: routers
     },
     {
       path: '/:catchAll(.*)',
