@@ -3,7 +3,7 @@ import type { AxiosRequestConfig } from 'axios'
 // 模拟的 request 函数
 function request<T = any>(option: AxiosRequestConfig): Promise<T> {
   return new Promise((resolve, reject) => {
-    const { url, method = 'get', data, params } = option
+    const { url, method = 'get', data } = option
     const key = url?.split('/')[0] // 使用 'users' 作为 localStorage 的 key
 
     if (!key) {
