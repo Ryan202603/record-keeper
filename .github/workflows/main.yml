@@ -14,10 +14,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.4.1 # 匹配你的 pnpm 版本
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # 使用 Node.js 18
+          node-version: '20' # 使用 Node.js 20
           cache: 'pnpm' # 使用 pnpm 缓存
 
       - name: Install dependencies
