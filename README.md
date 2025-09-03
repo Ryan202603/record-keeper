@@ -36,28 +36,6 @@
    pnpm run dev
    ```
 
-   这将同时启动前端开发服务器（默认 `http://localhost:5173`）和本地数据服务器（`http://localhost:3001`）。
-
-## 使用说明
-
-- 访问前端页面进行数据操作（如添加用户、编辑记录）。
-- 数据会自动保存到 `localData/db.json` 文件中。
-- 支持分页、搜索等功能，无需刷新页面。
-
-## 技术栈
-
-- **前端框架**: Vue 3 + TypeScript
-- **UI 组件**: Element Plus
-- **构建工具**: Vite
-- **本地服务器**: json-server
-- **包管理**: pnpm
-
-## 注意事项
-
-- 数据仅存储在本地文件，关闭项目后数据仍保留。
-- 如果 `db.json` 文件损坏，可手动修复 JSON 语法。
-- 生产环境建议备份 `localData` 文件夹。
-
 ## 许可证
 
 MIT License
