@@ -1,78 +1,71 @@
-import type { AxiosRequestConfig } from 'axios'
+import axios, { type AxiosRequestConfig, type Canceler } from 'axios'
 
-// 模拟的 request 函数
-function request<T = any>(option: AxiosRequestConfig): Promise<T> {
-  return new Promise((resolve, reject) => {
-    const { url, method = 'get', data } = option
-    const key = url?.split('/')[0] // 使用 'users' 作为 localStorage 的 key
+const pending = new Map<string, Canceler>()
 
-    if (!key) {
-      return reject(new Error('Invalid URL for localStorage operation'))
-    }
-
-    // 模拟异步请求
-    setTimeout(() => {
-      try {
-        const storedData = localStorage.getItem(key)
-        let items = storedData ? JSON.parse(storedData) : []
-
-        switch (method.toLowerCase()) {
-          case 'post': // 新增 (addUser)
-            {
-              // 为新数据创建一个唯一的 ID
-              const newItem = { ...data, id: Date.now() }
-              items.push(newItem)
-              localStorage.setItem(key, JSON.stringify(items))
-              // 模拟成功创建后返回新创建的数据
-              resolve({ data: newItem } as any)
-            }
-            break
-
-          case 'get': // 查询 (getUserList)
-            {
-              // 简单模拟参数查询，这里只返回所有数据
-              // 你可以根据 params 在这里实现更复杂的过滤、分页逻辑
-              resolve({ data: items } as any)
-            }
-            break
-
-          case 'put': // 修改 (updateUser)
-            {
-              const id = data.id
-              const itemIndex = items.findIndex((item: any) => item.id === id)
-              if (itemIndex > -1) {
-                items[itemIndex] = { ...items[itemIndex], ...data }
-                localStorage.setItem(key, JSON.stringify(items))
-                resolve({ data: items[itemIndex] } as any)
-              } else {
-                reject(new Error('Item not found'))
-              }
-            }
-            break
-
-          case 'delete': // 删除 (delUser)
-            {
-              // 从 url 中提取 id, e.g., 'users/1678886400000'
-              const id = parseInt(url?.split('/')[1] || '', 10)
-              const filteredItems = items.filter((item: any) => item.id !== id)
-              if (filteredItems.length < items.length) {
-                localStorage.setItem(key, JSON.stringify(filteredItems))
-                // 模拟成功删除返回空对象
-                resolve({} as any)
-              } else {
-                reject(new Error('Item not found for deletion'))
-              }
-            }
-            break
-
-          default:
-            reject(new Error(`Unsupported method: ${method}`))
-        }
-      } catch (error) {
-        reject(error)
+const addPending = (config: AxiosRequestConfig) => {
+  const url = [config.method, config.url, JSON.stringify(config.data)].join('&')
+  config.cancelToken =
+    config.cancelToken ||
+    new axios.CancelToken(cancel => {
+      if (!pending.has(url)) {
+        // 如果 pending 中不存在当前请求，则添加进去
+        pending.set(url, cancel)
       }
-    }, 50) // 模拟 50ms 的网络延迟
-  })
+    })
 }
 
+const removePending = (config: AxiosRequestConfig) => {
+  const url = [config.method, config.url, JSON.stringify(config.data)].join('&')
+  if (pending.has(url)) {
+    // 如果在 pending 中存在当前请求标识，需要取消当前请求，并且移除
+    const cancel = pending.get(url)!
+    cancel(url)
+
+    pending.delete(url)
+  }
+}
+
+function request<T = any>(option: AxiosRequestConfig): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const instance = axios.create({
+      baseURL: import.meta.env.VITE_API,
+      method: option.method,
+      timeout: 100000
+    })
+
+    instance.interceptors.request.use(
+      config => {
+        removePending(config)
+        addPending(config)
+        return config
+      },
+      err => {
+        return Promise.reject(err)
+      }
+    )
+
+    instance.interceptors.response.use(
+      response => {
+        removePending(response.config)
+        return response
+      },
+      err => {
+        return Promise.reject(err)
+      }
+    )
+
+    instance(option)
+      .then(
+        res => {
+          resolve(res.data)
+        },
+        err => {
+          reject(err)
+        }
+      )
+      .catch(err => {
+        console.log(err)
+      })
+  })
+}
 export default request

@@ -143,6 +143,7 @@ const handleSizeChange = (val: number) => {
 const handleCurrentChange = (val: number) => {
   emit('update:currentPage', val)
   emit('current-change', val)
+  tableRef.value?.setScrollTop(0)
 }
 
 const handleSelectionChange = (rows: any) => {
