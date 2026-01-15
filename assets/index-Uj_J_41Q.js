@@ -1,0 +1,1 @@
+import{_ as s,c as o,e,a as t}from"./index-BMJZffHt.js";const a={},c={class:"error-container"};function n(d,r){return t(),o("div",c,r[0]||(r[0]=[e("div",{class:"error-content"},[e("div",{class:"error-subtitle"},"找不到网页！"),e("div",{class:"error-info"},"对不起，您正在寻找的页面不存在。请检查URL是否正确，或返回首页。")],-1)]))}const _=s(a,[["render",n],["__scopeId","data-v-745ab0d3"]]);export{_ as default};

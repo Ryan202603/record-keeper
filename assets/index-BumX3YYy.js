@@ -1,0 +1,1 @@
+import{_ as c,f as o,w as t,H as s,c as _,h as i,T as l,L as d,a as e}from"./index-BMJZffHt.js";const f={};function m(u,p){const a=d("router-view");return e(),o(a,null,{default:t(({Component:n,route:r})=>[s(l,{name:"fade",mode:"out-in"},{default:t(()=>[(e(),_("div",{key:r.path},[(e(),o(i(n)))]))]),_:2},1024)]),_:1})}const x=c(f,[["render",m]]);export{x as default};
