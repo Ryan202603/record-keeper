@@ -36,6 +36,10 @@
    pnpm run dev
    ```
 
+   ```bash
+   pnpm run server
+   ```
+
 ## 许可证
 
 MIT License
