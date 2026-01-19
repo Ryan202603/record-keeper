@@ -7,5 +7,3 @@
     </transition>
   </router-view>
 </template>
-
-<script></script>

@@ -3,13 +3,6 @@
     {
       "id": "fc86",
       "sex": "1",
-      "nickName": "张三2333",
-      "phone": "13511111111",
-      "email": "123@qq.com"
-    },
-    {
-      "id": "fc86",
-      "sex": "1",
       "nickName": "张三2",
       "phone": "13511111111",
       "email": "123@qq.com"
@@ -202,6 +195,24 @@
       "nickName": "李四",
       "phone": "13511111111",
       "email": "123@qq.com"
+    }
+  ],
+  "softwares": [
+    {
+      "id": "6795",
+      "name": "京东",
+      "version": "12.6.0",
+      "testDevice": "iPhone17",
+      "testSystem": "26.2",
+      "features": "无开屏广告，可用国补"
+    },
+    {
+      "id": "44c9",
+      "name": "拼多多",
+      "version": "7.78.0",
+      "testDevice": "iPhone17",
+      "testSystem": "26.2",
+      "features": "无开屏广告"
     }
   ]
 }

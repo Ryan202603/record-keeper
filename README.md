@@ -15,22 +15,17 @@
 - **Node.js**: `23.8.0` 或更高版本
 - **pnpm**: `10.4.1` 或更高版本
 
-## 安装步骤
+## 运行
 
-1. 克隆项目：
+````
 
-   ```bash
-   git clone <https://github.com/1want/record-keeper.git>
-   cd record-keeper
-   ```
-
-2. 安装依赖：
+1. 安装依赖：
 
    ```bash
    pnpm install
-   ```
+````
 
-3. 启动项目：
+2. 启动项目：
 
    ```bash
    pnpm run dev

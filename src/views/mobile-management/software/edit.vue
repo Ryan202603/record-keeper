@@ -6,21 +6,21 @@
     width="600"
     draggable
   >
-    <el-form ref="formRef" :inline="true" :model="localForm" label-width="80px" :rules="rules">
-      <el-form-item label="用户昵称" prop="nickName">
-        <el-input v-model="localForm.nickName" />
+    <el-form ref="formRef" :model="localForm" label-width="100px" :rules="rules">
+      <el-form-item label="软件名称" prop="name">
+        <el-input v-model="localForm.name" placeholder="请输入软件名称" />
       </el-form-item>
-      <el-form-item label="手机号码" prop="phone">
-        <el-input v-model="localForm.phone" maxlength="11" />
+      <el-form-item label="版本" prop="version">
+        <el-input v-model="localForm.version" placeholder="请输入版本号" />
       </el-form-item>
-      <el-form-item label="邮箱">
-        <el-input v-model="localForm.email" />
+      <el-form-item label="测试手机" prop="testDevice">
+        <el-input v-model="localForm.testDevice" placeholder="请输入测试手机型号" />
       </el-form-item>
-      <el-form-item label="用户性别">
-        <el-select v-model="localForm.sex" placeholder="请选择性别">
-          <el-option label="男" value="1" />
-          <el-option label="女" value="0" />
-        </el-select>
+      <el-form-item label="测试系统" prop="testSystem">
+        <el-input v-model="localForm.testSystem" placeholder="请输入测试系统版本" />
+      </el-form-item>
+      <el-form-item label="特点" prop="features">
+        <el-input v-model="localForm.features" type="textarea" :rows="3" placeholder="请输入软件特点" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { addUser, updateUser } from '@/api'
+import { addSoftware, updateSoftware } from '@/api'
 import type { FormInstance } from 'element-plus'
 
 const props = defineProps(['dialog', 'form', 'type'])
@@ -41,15 +41,19 @@ const emit = defineEmits(['update:dialog', 'refresh'])
 const formRef = ref<FormInstance>()
 
 const rules = {
-  nickName: [{ required: true, message: '请输入用户昵称', trigger: 'blur' }],
-  phone: [
-    { required: true, message: '请输入手机号码', trigger: 'blur' },
-    { pattern: /^1[3-9]\d{9}$/, message: '请输入正确的手机号码', trigger: 'blur' }
-  ],
-  email: [{ type: 'email' as const, message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }]
+  name: [{ required: true, message: '请输入软件名称', trigger: 'blur' }],
+  version: [{ required: true, message: '请输入版本号', trigger: 'blur' }]
 }
 
 const localForm = ref({ ...props.form })
+
+watch(
+  () => props.form,
+  val => {
+    localForm.value = { ...val }
+  },
+  { deep: true }
+)
 
 const handleCancel = () => {
   emit('update:dialog', false)
@@ -60,10 +64,10 @@ const handleConfirm = async () => {
   await formRef.value.validate(async valid => {
     if (valid) {
       if (props.type === 'add') {
-        await addUser(localForm.value)
+        await addSoftware(localForm.value)
         ElMessage.success('添加成功')
       } else {
-        await updateUser(localForm.value)
+        await updateSoftware(localForm.value)
         ElMessage.success('修改成功')
       }
       emit('update:dialog', false)

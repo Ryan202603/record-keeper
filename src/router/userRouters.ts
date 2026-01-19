@@ -20,21 +20,21 @@ export default [
     ]
   },
   {
-    name: 'work-management',
-    path: 'work-management',
-    component: () => import('@/views/work-management/index.vue'),
+    name: 'mobile-management',
+    path: 'mobile-management',
+    component: () => import('@/views/mobile-management/index.vue'),
     meta: {
-      title: '工作管理',
+      title: '手机管理',
       id: 2
     },
     children: [
       {
-        name: 'approval',
-        path: 'approval',
-        component: () => import('@/views/work-management/approval/index.vue'),
+        name: 'software',
+        path: 'software',
+        component: () => import('@/views/mobile-management/software/index.vue'),
         meta: {
-          title: '审批管理',
-          id: 22
+          title: '软件管理',
+          id: 21
         }
       }
     ]
