@@ -47,6 +47,11 @@ const rules = {
 
 const localForm = ref({ ...props.form })
 
+if (props.type === 'add') {
+  localForm.value.testDevice = 'iPhone17'
+  localForm.value.testSystem = 'iOS26.2'
+}
+
 watch(
   () => props.form,
   val => {

@@ -2,7 +2,7 @@ import { type Ref, ref, onMounted } from 'vue'
 
 interface TableResponse<T> {
   data: T[]
-  items: number
+  total: number
 }
 
 export function useTableData<T>(
@@ -21,15 +21,15 @@ export function useTableData<T>(
   // 加载数据函数
   const loadData = async () => {
     const params = {
-      _page: pageNum.value,
-      _per_page: pageSize.value,
+      pageNum: pageNum.value,
+      pageSize: pageSize.value,
       ...queryParams.value
     }
 
     const res = await requestApi(params)
 
     tableData.value = res.data
-    total.value = res.items
+    total.value = res.total
   }
 
   // 处理页码变化

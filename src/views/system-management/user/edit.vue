@@ -60,11 +60,11 @@ const handleConfirm = async () => {
   await formRef.value.validate(async valid => {
     if (valid) {
       if (props.type === 'add') {
-        await addUser(localForm.value)
-        ElMessage.success('添加成功')
+        const { message } = await addUser(localForm.value)
+        ElMessage(message)
       } else {
-        await updateUser(localForm.value)
-        ElMessage.success('修改成功')
+        const { message } = await updateUser(localForm.value)
+        ElMessage(message)
       }
       emit('update:dialog', false)
       emit('refresh')

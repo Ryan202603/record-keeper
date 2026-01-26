@@ -22,7 +22,7 @@ export const addSoftware = data => {
 // 编辑软件
 export const updateSoftware = data => {
   return request({
-    url: `${apiPrefix}/${data.id}`,
+    url: apiPrefix + '/' + data.id,
     method: 'put',
     data
   })

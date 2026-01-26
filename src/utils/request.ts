@@ -37,6 +37,10 @@ function request<T = any>(option: AxiosRequestConfig): Promise<T> {
       config => {
         removePending(config)
         addPending(config)
+        const token = localStorage.getItem('token')
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`
+        }
         return config
       },
       err => {
