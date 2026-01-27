@@ -8,15 +8,24 @@
       :default-active="$route.path"
       router
     >
-      <el-sub-menu v-for="item in filteredRouter" :key="item.meta.title" :index="item.path">
-        <template #title>
+      <template v-for="item in filteredRouter" :key="item.meta.title">
+        <el-sub-menu v-if="item.children && item.children.length > 0" :index="item.path">
+          <template #title>
+            <el-icon><Setting /></el-icon>
+            <span>{{ item.meta.title }}</span>
+          </template>
+          <el-menu-item v-for="itemz of item.children" :key="itemz.meta.title" :index="`/${item.path}/${itemz.path}`">
+            {{ itemz.meta.title }}
+          </el-menu-item>
+        </el-sub-menu>
+
+        <el-menu-item v-else :index="`/${item.path}`">
           <el-icon><Setting /></el-icon>
-          <span>{{ item.meta.title }}</span>
-        </template>
-        <el-menu-item v-for="itemz of item.children" :key="itemz.meta.title" :index="`/${item.path}/${itemz.path}`">
-          {{ itemz.meta.title }}
+          <template #title>
+            <span>{{ item.meta.title }}</span>
+          </template>
         </el-menu-item>
-      </el-sub-menu>
+      </template>
     </el-menu>
   </el-scrollbar>
 </template>
@@ -26,14 +35,9 @@ import { computed } from 'vue'
 import { Setting } from '@element-plus/icons-vue'
 import { useUserInfo } from '@/hooks'
 
-// 不再直接引用静态路由，而是使用动态生成的路由
-// import newRouter from '@/router/userRouters'
-
 const { isCollapse, menus } = useUserInfo()
 
-// 根据权限过滤路由
 const filteredRouter = computed(() => {
-  // 直接使用 store 中的 menus (已经在 generateRoutes 中过滤好了)
   return menus.value
 })
 </script>

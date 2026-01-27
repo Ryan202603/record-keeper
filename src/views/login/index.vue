@@ -75,7 +75,7 @@ const handleLogin = async () => {
         setUserInfo(res)
 
         ElMessage.success('登录成功')
-        router.push('/system-management/user')
+        router.push('/dashboard')
       } catch (error) {
         ElMessage.error('登录失败，请检查账号密码')
       } finally {

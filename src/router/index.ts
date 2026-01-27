@@ -34,13 +34,12 @@ router.beforeEach((to, _form, next) => {
   if (to.path !== '/login' && !token) {
     next('/login')
   } else {
-    // 每次页面刷新时动态添加的路由会丢失，这里需要重新添加
     // 设置isRoutesGenerated防止重复添加，只有第一次需要添加
+    // 每次页面刷新时动态添加的路由会丢失，isRoutesGenerated值被重置
     if (permissions.value.length && !isRoutesGenerated.value) {
       generateRoutes()
       addRouter()
-      next({ path: to.path })
-      return
+      next({ path: to.path, query: to.query, replace: true })
     } else {
       next()
     }

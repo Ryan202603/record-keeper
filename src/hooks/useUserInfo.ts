@@ -11,7 +11,7 @@ interface UserState {
 
 const state = reactive<UserState>({
   isCollapse: false,
-  permissions: [],
+  permissions: JSON.parse(localStorage.getItem('permissions') || '[]'),
   userInfo: null,
   menus: [],
   isRoutesGenerated: false
@@ -30,7 +30,11 @@ export function useUserInfo() {
   const setUserInfo = (info: any) => {
     state.userInfo = info
     if (info.permissions) {
+      if (!info.permissions.includes('dashboard')) {
+        info.permissions.push('dashboard')
+      }
       state.permissions = info.permissions
+      localStorage.setItem('permissions', JSON.stringify(info.permissions))
     }
   }
 

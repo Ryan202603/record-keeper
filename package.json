@@ -12,9 +12,11 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "axios": "1.10.0",
+    "echarts": "^6.0.0",
     "element-plus": "2.10.2",
     "v3-tabs": "^0.0.53",
     "vue": "3.5.17",
+    "vue-echarts": "^8.0.1",
     "vue-router": "4.5.1"
   },
   "devDependencies": {

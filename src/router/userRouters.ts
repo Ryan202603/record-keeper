@@ -1,5 +1,13 @@
 export default [
   {
+    name: 'dashboard',
+    path: 'dashboard',
+    component: () => import('@/views/dashboard/index.vue'),
+    meta: {
+      title: '首页'
+    }
+  },
+  {
     name: 'system-management',
     path: 'system-management',
     component: () => import('@/views/system-management/index.vue'),
