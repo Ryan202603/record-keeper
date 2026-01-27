@@ -14,3 +14,10 @@ export const getUserInfoApi = () => {
     method: 'get'
   })
 }
+
+export const logoutApi = () => {
+  return request({
+    url: '/auth/logout',
+    method: 'post'
+  })
+}

@@ -74,12 +74,20 @@ export function useUserInfo() {
     state.userInfo = null
   }
 
+  const clearUserInfo = () => {
+    resetState()
+    localStorage.removeItem('token')
+    localStorage.removeItem('permissions')
+    localStorage.removeItem('historyMenus')
+  }
+
   return {
     ...toRefs(state),
     toggleCollapse,
     setPermissions,
     setUserInfo,
     generateRoutes,
-    resetState
+    resetState,
+    clearUserInfo
   }
 }

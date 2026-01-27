@@ -12,6 +12,9 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+      <div class="right">
+        <el-button @click="logout">退出登录</el-button>
+      </div>
     </div>
     <div class="bottom">
       <Tabs
@@ -27,12 +30,26 @@
 <script setup>
 import Tabs from 'v3-tabs'
 import { useUserInfo } from '@/hooks'
-import { Expand, Fold, Close } from '@element-plus/icons-vue'
+import { logoutApi } from '@/api/login'
+import { Expand, Fold, Close, ArrowDown } from '@element-plus/icons-vue'
 
 const { toggleCollapse, isCollapse, userInfo, clearUserInfo } = useUserInfo()
 const route = useRoute()
 const router = useRouter()
 const historyMenus = ref([])
+
+const logout = () => {
+  ElMessageBox.confirm('确定要退出登录吗？', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    logoutApi()
+    clearUserInfo()
+    router.push('/login')
+    ElMessage.success('退出登录成功')
+  })
+}
 
 const breadcrumbs = computed(() => {
   return route.matched
