@@ -1,14 +1,14 @@
 <template>
   <div class="login-container">
-    <div class="login-card">
+    <div class="login-card" @keyup.enter="handleLogin">
       <div class="login-header">
         <h2>Record Keeper</h2>
         <p>欢迎回来，请登录您的账号</p>
       </div>
 
-      <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form" @keyup.enter="handleLogin">
+      <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form">
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username" placeholder="账号" :prefix-icon="User" size="large" />
+          <el-input v-model="loginForm.username" placeholder="账号" :prefix-icon="User" size="large" maxlength="11" />
         </el-form-item>
 
         <el-form-item prop="password">
@@ -53,11 +53,11 @@ const loginForm = reactive({
 const loginRules = reactive<FormRules>({
   username: [
     { required: true, message: '请输入账号', trigger: 'blur' },
-    { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+    { min: 3, max: 11, message: '长度在 3 到 11 个字符', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 3, message: '密码长度不能少于 6 位', trigger: 'blur' }
+    { min: 6, message: '密码长度不能少于 6 位', trigger: 'blur' }
   ]
 })
 

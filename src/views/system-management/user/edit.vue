@@ -23,7 +23,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="用户角色" prop="roleId">
-        <el-select v-model="localForm.roleId" placeholder="请选择角色" style="width: 100%">
+        <el-select v-model="localForm.roleId" placeholder="请选择角色">
           <el-option v-for="item in roleOptions" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
