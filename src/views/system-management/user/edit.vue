@@ -22,6 +22,11 @@
           <el-option label="女" value="0" />
         </el-select>
       </el-form-item>
+      <el-form-item label="用户角色" prop="roleId">
+        <el-select v-model="localForm.roleId" placeholder="请选择角色" style="width: 100%">
+          <el-option v-for="item in roleOptions" :key="item.id" :label="item.name" :value="item.id" />
+        </el-select>
+      </el-form-item>
     </el-form>
     <template #footer>
       <div class="dialog-footer">
@@ -34,11 +39,22 @@
 
 <script setup lang="ts">
 import { addUser, updateUser } from '@/api'
+import { getRoleList } from '@/api/system-management/role'
 import type { FormInstance } from 'element-plus'
 
 const props = defineProps(['dialog', 'form', 'type'])
 const emit = defineEmits(['update:dialog', 'refresh'])
 const formRef = ref<FormInstance>()
+const roleOptions = ref<any[]>([])
+
+onMounted(async () => {
+  try {
+    const res: any = await getRoleList()
+    roleOptions.value = res
+  } catch (error) {
+    console.error(error)
+  }
+})
 
 const rules = {
   nickName: [{ required: true, message: '请输入用户昵称', trigger: 'blur' }],

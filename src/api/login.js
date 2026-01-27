@@ -7,3 +7,10 @@ export const loginApi = data => {
     data
   })
 }
+
+export const getUserInfoApi = () => {
+  return request({
+    url: '/auth/profile',
+    method: 'get'
+  })
+}

@@ -37,12 +37,13 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { User, Lock } from '@element-plus/icons-vue'
 import type { FormInstance, FormRules } from 'element-plus'
-import { ElMessage } from 'element-plus'
 import { loginApi } from '@/api'
+import { useUserInfo } from '@/hooks'
 
 const router = useRouter()
 const loginFormRef = ref<FormInstance>()
 const loading = ref(false)
+const { setUserInfo } = useUserInfo()
 
 const loginForm = reactive({
   username: '',
@@ -56,7 +57,7 @@ const loginRules = reactive<FormRules>({
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码长度不能少于 6 位', trigger: 'blur' }
+    { min: 3, message: '密码长度不能少于 6 位', trigger: 'blur' }
   ]
 })
 
@@ -67,11 +68,14 @@ const handleLogin = async () => {
     if (valid) {
       loading.value = true
       try {
-        const res: any = await loginApi(loginForm)
+        const payload = { ...loginForm }
+        const res = await loginApi(payload)
         localStorage.setItem('token', res.access_token)
 
+        setUserInfo(res)
+
         ElMessage.success('登录成功')
-        router.push('/')
+        router.push('/system-management/user')
       } catch (error) {
         ElMessage.error('登录失败，请检查账号密码')
       } finally {

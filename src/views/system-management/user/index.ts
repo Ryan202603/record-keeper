@@ -15,6 +15,11 @@ export const columns: TableColumn[] = [
     minWidth: 180
   },
   {
+    prop: 'roleName',
+    label: '角色',
+    minWidth: 120
+  },
+  {
     prop: 'sex',
     label: '性别',
     minWidth: 120,

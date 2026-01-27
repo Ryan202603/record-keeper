@@ -23,7 +23,7 @@ export const addUser = data => {
 export const updateUser = data => {
   return request({
     url: apiPrefix + '/' + data.id,
-    method: 'patch',
+    method: 'Put',
     data
   })
 }
