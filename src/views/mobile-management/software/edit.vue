@@ -1,11 +1,5 @@
 <template>
-  <el-dialog
-    :model-value="dialog"
-    @update:model-value="val => emit('update:dialog', val)"
-    :title="type === 'add' ? '新增' : '编辑'"
-    width="600"
-    draggable
-  >
+  <el-dialog v-model="dialogVisible" :title="type === 'add' ? '新增' : '编辑'" width="600" draggable>
     <el-form ref="formRef" :model="localForm" label-width="100px" :rules="rules">
       <el-form-item label="软件名称" prop="name">
         <el-input v-model="localForm.name" placeholder="请输入软件名称" />
@@ -25,8 +19,8 @@
     </el-form>
     <template #footer>
       <div class="dialog-footer">
-        <el-button @click="handleCancel">取消</el-button>
-        <el-button type="primary" @click="handleConfirm">确认</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" :loading="loading" @click="handleConfirm">确认</el-button>
       </div>
     </template>
   </el-dialog>
@@ -34,49 +28,81 @@
 
 <script setup lang="ts">
 import { addSoftware, updateSoftware } from '@/api'
-import type { FormInstance } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
 
-const props = defineProps(['dialog', 'form', 'type'])
-const emit = defineEmits(['update:dialog', 'refresh'])
+// 表单数据接口定义
+interface SoftwareForm {
+  id?: number
+  name: string
+  version: string
+  testDevice: string
+  testSystem: string
+  features: string
+}
+
+// Props 类型定义 (Vue 3.5+ 响应式解构)
+interface Props {
+  form: SoftwareForm
+  type: 'add' | 'edit'
+}
+
+const { form, type } = defineProps<Props>()
+
+// Emits 类型定义 (Named tuple syntax 3.3+)
+const emit = defineEmits<{
+  refresh: []
+}>()
+
+// 使用 defineModel 简化 v-model 双向绑定 (3.4+)
+const dialogVisible = defineModel<boolean>('dialog', { required: true })
+
 const formRef = ref<FormInstance>()
+const loading = ref(false)
 
-const rules = {
+// 表单验证规则
+const rules: FormRules<SoftwareForm> = {
   name: [{ required: true, message: '请输入软件名称', trigger: 'blur' }],
   version: [{ required: true, message: '请输入版本号', trigger: 'blur' }]
 }
 
-const localForm = ref({ ...props.form })
+// 本地表单数据
+const localForm = ref<SoftwareForm>({ ...form })
 
-if (props.type === 'add') {
+// 新增时设置默认值
+if (type === 'add') {
   localForm.value.testDevice = 'iPhone17'
   localForm.value.testSystem = 'iOS26.2'
 }
 
+// 监听表单数据变化 (使用 getter 包装解构的 props)
 watch(
-  () => props.form,
+  () => form,
   val => {
     localForm.value = { ...val }
   },
   { deep: true }
 )
 
-const handleCancel = () => {
-  emit('update:dialog', false)
-}
-
+// 提交表单
 const handleConfirm = async () => {
   if (!formRef.value) return
+
   await formRef.value.validate(async valid => {
-    if (valid) {
-      if (props.type === 'add') {
+    if (!valid) return
+
+    loading.value = true
+    try {
+      if (type === 'add') {
         await addSoftware(localForm.value)
         ElMessage.success('添加成功')
       } else {
         await updateSoftware(localForm.value)
         ElMessage.success('修改成功')
       }
-      emit('update:dialog', false)
+      dialogVisible.value = false
       emit('refresh')
+    } finally {
+      loading.value = false
     }
   })
 }
