@@ -126,6 +126,10 @@ const handleLogin = async () => {
   margin-top: 20px;
 }
 
+.el-input {
+  --el-input-width: 100% !important;
+}
+
 .login-button {
   width: 100%;
   margin-top: 10px;

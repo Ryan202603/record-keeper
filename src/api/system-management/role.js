@@ -31,7 +31,7 @@ export const addRole = data => {
 export const updateRole = (id, data) => {
   return request({
     url: `/roles/${id}`,
-    method: 'put',
+    method: 'patch',
     data
   })
 }

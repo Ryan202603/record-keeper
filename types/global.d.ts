@@ -11,6 +11,7 @@ declare global {
 
   interface OperationForm {
     type: 'input' | 'select' | 'date' | 'daterange'
+    label?: string
     prop: string
     placeholder?: string
     options?: { label: string; value: any }[] // 仅用于select类型
@@ -20,16 +21,20 @@ declare global {
   interface TableButton {
     label: string
     type?: ButtonType
-    onClick: (row: any, index: number) => void
+    icon?: Component
+    show?: (row: any) => boolean
+    onClick: (row: any, index?: number) => void
   }
 
   interface TableColumn {
-    prop: string
-    label: string
+    type?: 'selection' | 'operation' | 'tag' | 'switch' | 'image'
+    prop?: string
+    label?: string
+    width?: number
     minWidth?: number
     sortable?: boolean
     align?: 'left' | 'center' | 'right'
-    type?: 'tag' | 'switch' | 'image'
+    slot?: string
     formatter?: (any) => {}
   }
 }

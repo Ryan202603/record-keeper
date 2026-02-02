@@ -8,6 +8,48 @@ export default [
     }
   },
   {
+    name: 'business-management',
+    path: 'business-management',
+    component: () => import('@/views/business-management/index.vue'),
+    meta: {
+      title: '业务管理'
+    },
+    children: [
+      {
+        name: 'expense-approval',
+        path: 'expense-approval',
+        component: () => import('@/views/business-management/expense-approval/index.vue'),
+        meta: {
+          title: '费用审核'
+        }
+      },
+      {
+        name: 'leave-approval',
+        path: 'leave-approval',
+        component: () => import('@/views/business-management/leave-approval/index.vue'),
+        meta: {
+          title: '请假审核'
+        }
+      },
+      {
+        name: 'overtime-approval',
+        path: 'overtime-approval',
+        component: () => import('@/views/business-management/overtime-approval/index.vue'),
+        meta: {
+          title: '加班审核'
+        }
+      },
+      {
+        name: 'approval-center',
+        path: 'approval-center',
+        component: () => import('@/views/business-management/approval-center/index.vue'),
+        meta: {
+          title: '审批中心'
+        }
+      }
+    ]
+  },
+  {
     name: 'system-management',
     path: 'system-management',
     component: () => import('@/views/system-management/index.vue'),

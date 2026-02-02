@@ -49,7 +49,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
 import type { FormInstance, FormRules } from 'element-plus'
 import { getRoleList, addRole, updateRole, deleteRole } from '@/api/system-management/role'
 import userRouters from '@/router/userRouters'
