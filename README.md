@@ -2,7 +2,7 @@
 
 这是一个基于 Vue 3 + TypeScript + Vite + Element Plus 构建的后台管理系统。
 
-后端地址 https://github.com/1want/nest-admin
+后端地址 https://github.com/Ryan202603/nest-admin
 
 ## 环境要求
 
