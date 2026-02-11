@@ -12,15 +12,9 @@
 ## 运行
 
 ```
-1. 安装依赖：
-   pnpm install
-```
+pnpm install
 
-```
-2. 启动项目：
-   pnpm run dev
-
-   pnpm run server
+pnpm run dev
 ```
 
 ## 许可证
