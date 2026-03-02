@@ -1,15 +1,20 @@
 // 用法'yyyy-mm-dd HH:MM:SS'
-function dateFormat(fmt = 'yyyy-mm-dd', date: Date | string): string {
+function dateFormat(date: Date | string, fmt = 'yyyy-mm-dd'): string {
   let dateObj: Date
 
   if (date instanceof Date) {
     dateObj = date
   } else {
-    dateObj = new Date(date.replace(/-/g, '/')) // 替换'-'为'/'，解决Safari兼容性问题
+    // 优先尝试直接转换 (支持 ISO 8601 如 2026-03-02T05:43:07.112Z)
+    dateObj = new Date(date)
 
-    // 检查日期是否有效
+    // 如果无效，尝试解决 Safari 兼容性问题 (YYYY-MM-DD 替换为 YYYY/MM/DD)
+    if (isNaN(dateObj.getTime()) && typeof date === 'string' && date.includes('-')) {
+      dateObj = new Date(date.replace(/-/g, '/'))
+    }
+
+    // 再次检查日期是否有效
     if (isNaN(dateObj.getTime())) {
-      console.warn('Invalid date string:', date)
       return fmt // 返回原始格式
     }
   }

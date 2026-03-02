@@ -1,4 +1,4 @@
-// import dateFormat from '@/utils/formatData'
+import dateFormat from '@/utils/formatData'
 
 export const columns: TableColumn[] = [
   {
@@ -35,7 +35,8 @@ export const columns: TableColumn[] = [
     prop: 'createdAt',
     label: '创建时间',
     minWidth: 180,
-    align: 'center'
+    align: 'center',
+    formatter: dateFormat
   }
 ]
 

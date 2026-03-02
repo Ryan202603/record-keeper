@@ -28,8 +28,8 @@ declare global {
 
   interface TableColumn {
     type?: 'selection' | 'operation' | 'tag' | 'switch' | 'image'
-    prop?: string
-    label?: string
+    prop: string
+    label: string
     width?: number
     minWidth?: number
     sortable?: boolean
