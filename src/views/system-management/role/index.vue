@@ -104,11 +104,30 @@ const handleAdd = () => {
 const handleEdit = (row: Role) => {
   dialogTitle.value = '编辑角色'
   dialogVisible.value = true
+  const checkedKeys = row.permissions.filter(key => isLeafNode(key, userRouters))
+
   nextTick(() => {
     Object.assign(form, row)
     // 设置树的选中状态
-    treeRef.value?.setCheckedKeys(row.permissions)
+    treeRef.value?.setCheckedKeys(checkedKeys)
   })
+}
+
+// 辅助函数：判断是否为叶子节点
+const isLeafNode = (key: string, routers: any[]): boolean => {
+  for (const router of routers) {
+    if (router.name === key) {
+      // 找到了节点，检查是否有 children
+      return !router.children || router.children.length === 0
+    }
+    if (router.children && router.children.length > 0) {
+      // 递归查找，如果找到并且是叶子节点，返回 true
+      if (isLeafNode(key, router.children)) {
+        return true
+      }
+    }
+  }
+  return false
 }
 
 const handleDelete = (row: Role) => {

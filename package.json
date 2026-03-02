@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --open --host",
     "build": "vue-tsc --noEmit && vite build --mode development && vue-tsc -b && vite build",
+    "lint": "oxlint .",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "@types/node": "^24.0.15",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vue/tsconfig": "^0.7.0",
+    "oxlint": "^1.49.0",
     "rollup-plugin-visualizer": "^6.0.3",
     "sass": "^1.89.2",
     "typescript": "~5.8.3",

@@ -84,6 +84,14 @@ export default [
     },
     children: [
       {
+        name: 'foods',
+        path: 'foods',
+        component: () => import('@/views/mobile-management/foods/index.vue'),
+        meta: {
+          title: '食物管理'
+        }
+      },
+      {
         name: 'software',
         path: 'software',
         component: () => import('@/views/mobile-management/software/index.vue'),
