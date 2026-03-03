@@ -23,10 +23,16 @@
         </el-select>
       </el-form-item>
       <el-form-item label="封面图" prop="cover">
-        <el-input v-model="localForm.cover" placeholder="请输入封面图URL" />
-      </el-form-item>
-      <el-form-item label="背景图" prop="bgImage">
-        <el-input v-model="localForm.bgImage" placeholder="请输入沉浸式背景图/环境图URL" />
+        <el-upload
+          class="avatar-uploader"
+          action="#"
+          :show-file-list="false"
+          :http-request="uploadImage"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img v-if="localForm.cover" :src="localForm.cover" class="avatar" />
+          <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+        </el-upload>
       </el-form-item>
       <el-form-item label="描述" prop="desc">
         <el-input v-model="localForm.desc" type="textarea" placeholder="请输入描述" />
@@ -51,14 +57,14 @@
 </template>
 
 <script setup lang="ts">
-import { createFood, updateFood } from '@/api/mobile-management/foods'
-import type { FormInstance, FormRules } from 'element-plus'
+import { createFood, updateFood, uploadFile } from '@/api'
+import { Plus } from '@element-plus/icons-vue'
+import type { FormInstance, FormRules, UploadProps } from 'element-plus'
 
 interface FoodForm {
   id?: number
   name?: string
   cover?: string
-  bgImage?: string
   desc?: string
   season?: string
   category?: string
@@ -90,6 +96,25 @@ const rules: FormRules<FoodForm> = {
 }
 
 const localForm = ref<FoodForm>({ ...props.form })
+
+const beforeAvatarUpload: UploadProps['beforeUpload'] = rawFile => {
+  if (rawFile.type !== 'image/jpeg' && rawFile.type !== 'image/png') {
+    ElMessage.error('Avatar picture must be JPG/PNG format!')
+    return false
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error('Avatar picture size can not exceed 2MB!')
+    return false
+  }
+  return true
+}
+
+const uploadImage = async (options: any) => {
+  const { file } = options
+  const formData = new FormData()
+  formData.append('file', file)
+  const res = await uploadFile(formData)
+  localForm.value.cover = res.data
+}
 
 watch(
   () => props.form,
@@ -125,3 +150,32 @@ const handleConfirm = async () => {
   })
 }
 </script>
+
+<style scoped>
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+
+.avatar {
+  width: 175px;
+  height: 262px;
+  display: block;
+}
+</style>
