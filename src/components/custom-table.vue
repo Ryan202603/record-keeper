@@ -36,7 +36,12 @@
           </template>
 
           <template v-else-if="column.type === 'image'">
-            <el-image :src="scope.row[column.prop]" :preview-src-list="[scope.row[column.prop]]" fit="cover" />
+            <el-image
+              :src="scope.row[column.prop]"
+              :preview-src-list="[scope.row[column.prop]]"
+              fit="cover"
+              preview-teleported
+            />
           </template>
 
           <template v-else>
